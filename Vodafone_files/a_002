@@ -1,0 +1,14 @@
+window.Adform.Tracking.TrackingPointId = 43207985;
+window.Adform.Tracking.TrackingPointName = "vodafone.es/conocenos/aviso-legal/";
+try{
+(function(){var adfScript = document.createElement('script');
+adfScript.src='https://www.googletagmanager.com/gtag/js?id=AW-987103523';
+document.head.appendChild(adfScript);
+})();
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-987103523');
+}catch(e){}

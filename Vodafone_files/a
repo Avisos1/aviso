@@ -1,0 +1,234 @@
+window.Adform.Tracking.TrackingPointId = 31655693;
+window.Adform.Tracking.TrackingPointName = "Master Tag";
+try{
+// *2018-12-20* 14:10  MAster Tag Template v1.8
+(function(){
+	
+	var config = {
+		clientId : 1034491, 
+		version: "v10 | 2018-12-20 16:30",
+		namePrefix : "", 
+		FixedNames : [
+		    
+
+			{"urlRegex": "^https?:\/\/manuales.vodafone.es\/autonomos", "name": "manuales.vodafone.es/autonomos/*" },
+			{"urlRegex": "^https?:\/\/manuales.vodafone.es\/empresas", "name": "manuales.vodafone.es/empresas/*" },
+			{"urlRegex": "^https?:\/\/manuales.vodafone.es\/web", "name": "manuales.vodafone.es/web/*" },
+			{"urlRegex": "^https?:\/\/manuales.vodafone.es\/.*", "name": "manuales.vodafone.es/-" },
+
+			{"urlRegex": "^https?:\/\/movil.vodafone.es\/web", "name": "movil.vodafone.es/web/*" },
+			{"urlRegex": "^https?:\/\/movil.vodafone.es\/.*", "name": "movil.vodafone.es/-" },
+
+			{"urlRegex": "^https?:\/\/www.observatorio-empresas.vodafone.es\/", "name": "observatorio-empresas.vodafone.es/*" },
+			
+			{"urlRegex": "^https?:\/\/www.saladeprensa.vodafone.es\/", "name": "saladeprensa.vodafone.es/*" },
+
+			{"urlRegex": "^https?:\/\/tiendas.vodafone.es\/", "name": "tiendas.vodafone.es/*" },
+
+			{"urlRegex": "www.vodafone.es\/areaclientes\/autonomos" , "name": "vodafone.es/areaclientes/autonomos/*"},
+			{"urlRegex": "www.vodafone.es\/areaclientes\/empresas" , "name": "vodafone.es/areaclientes/empresas/*"},
+			{"urlRegex": "www.vodafone.es\/areaclientes\/.*" , "name": "vodafone.es/areaclientes/-"},
+
+
+			{"urlRegex": "vodafone.es\/areaclientes_me\/", "name": "vodafone.es/areaclientes_me/*"},
+
+			{"urlRegex": "vodafone.es/tienda/particulares\/.*\/informacion", "name": "vodafone.es/tienda/particulares/informacion*"},
+
+			{"urlRegex": "vodafone.es.*\/mivodafone", "name": "vodafone.es/mivodafone/*"},
+
+			{"urlRegex": "vodafone.es\/conocenos\/vodafone-espana\/sala-de-prensa", "name": "vodafone.es/conocenos/vodafone-espana/sala-de-prensa/*"},
+
+			{"urlRegex": "chypear.vodafone.es\/.*", "name": "chypear.vodafone.es/*"},
+			
+			{"urlContains": "m.vodafone.es", "name": "m.vodafone.es/*"}
+
+			
+		], // Array of strings or objects. Values examples above
+		Whitelist : [
+		    {"urlRegex": "^https?:\/\/vodafone.ofertasytarifas.com\/"},
+			{"urlRegex": "^https?:\/\/www\.vodafone\.es"},
+			{"urlRegex": "^https?:\/\/www\.vodafoneempresa\.es\/"},	
+			{"urlRegex": "^https?:\/\/vodafoneempresa\.es\/"},
+			{"urlRegex": "^https?:\/\/www\.vodafoneyu\.es"},
+			{"urlRegex": "^https?:\/\/(bit|chypear|manuales|movil|tiendas|yu).vodafone.es/"},
+			{"urlRegex": "^https?:\/\/(www\.)?(oferta|saladeprensa|observatorio-empresas).vodafone.es/"},
+			{"urlRegex": "^https?:\/\/(shop\.v\.vodafone\.com)" },
+			{"urlRegex": "^https?:\/\/(www\.)?(ono\.)" },
+			{"urlRegex": "^https?:\/\/m.vodafone.es"}
+		], // Array of strings or objects. Values examples above
+		BlockPages : [
+			{"querySelector": "div.wrapper404"},
+			{"querySelector": "div.bloquePaginaError"},
+			{"urlRegex": "vodafone.es.*\/(seguro|ss|tools)\/" },
+			{"urlRegex": "(\@.*\.|uuid|password|clave|error|verificar\-email)"},
+			{"urlRegex": "\/tienda\/.*(basicas|estado-de-mi-pedido|error|pdf|interno|tools)\/"},
+			{"urlRegex": "ono\..*(altas-internet\.com|localhost|rastreatortest)"},
+			{"urlRegex": "oferta\.vodafone\.es\/test\/"}
+			
+		], // Array of strings or objects. Values examples above
+		globalVariable: "adfMT", // String. If empty, global variable is not set. Used mainly for testing
+		hrefFilter : function(href){ 
+				href = href.toLowerCase();
+				href = href.replace(/(\/(ca\/c|ca|c|es)\/)/g,"/"); //Joins language page names
+				href = href.replace(/(index\.html)/g,""); // removes index.html name
+				href = (href.slice(-1) != "/" && href.slice(-1) != "*" && !href.match("\.html|\.asp|\.php|\.aspx|\/.jsp")) ? href + "/" : href; // Adds "/" if it does not end in 
+				return href; 
+			}, // function to edit web url before it goes to main code
+		finalNameFilter: function(name){
+				name = name.toLowerCase();
+				name = name.replace(/^\/\//g,""); // If URL starts with //, removes it
+				name = name.replace(/\/\//g,"/"); // Fixes double slashes
+				name = name.replace(/(\/(ca\/c|ca|c|es)\/)/g,"/"); //Joins language page names
+				name = name.replace(/(index\.html)/g,""); // removes index.html name
+				name = (name.slice(-1) != "/" && name.slice(-1) != "*" && !name.match("\.html|\.asp|\.php|\.aspx|\/.jsp")) ? name + "/" : name; // Adds "/" if it does not end in 
+				return name; 
+			}, // function to edit final tracking point name before it fires
+		customVars: function(){ var cvars = {}; return cvars; }, // additional tracking point variables. Examples: cvars.sales = 99.99; cvars.orderid = "order 123"; cvars.sv1 = "customvalue";
+        delayedTps: [] // Array of objects: {prefix:"", suffix:"_d10", delay:10, whiteList:[], blockList:[]}. Setting allows to fire additional tracking poitns after some seconds. Delayd tp will not fire if main is not firing.
+		};
+	
+	// DO NOT MODIFY THE CODE BELOW
+	
+	// Additional code to deal with iframes
+	var inIframe = function(){try{return window.self!==window.top}catch(a){return!0}}
+	var inFriendlyIframe = function(){try{return window.top.document.getElementById("adf"),!0}catch(a){return!1}}
+	var isInFriendlyiframe = inIframe() && inFriendlyIframe();
+	var isInNonFriendlyiframe = inIframe() && !inFriendlyIframe();
+	var win = isInFriendlyiframe ? window.top : window;
+	var adfLib = win.adf || window.adf || {};
+	
+	// Define global vars
+	if(config.globalVariable != "" && !win.hasOwnProperty(config.globalVariable)){ win[config.globalVariable] = {}; }
+	
+	// Define main var
+	var main = config.globalVariable != "" ? win[config.globalVariable] : {};
+	main.config = config;
+	main.firedTps = main.firedTps || [];
+	main.href = isInNonFriendlyiframe ? document.referrer : win.location.href;
+	main.pageTitle = isInNonFriendlyiframe ? "" : win.document.title;
+	main.defaultName = (win.location.hostname + win.location.pathname).toLowerCase().replace(/^\/\//,"").replace("www.","").replace(/\/+/g,"/").replace(/(index|default|home)\.(html|php|aspx)/,"").replace(/\/$/,"");
+	
+	// Filters
+	if(typeof config.hrefFilter == "function"){
+		var newHref = config.hrefFilter((main.href+""));
+		if(typeof newHref == "string"){ main.href = newHref; }
+	}
+	
+	// Validation
+	if(!main.config.clientId){ main.z_endCondition = "ERROR! Client ID is not defined in config"; return; }
+	
+	// Start
+	function currentPageMatchesRule(rule,defval){
+		
+		if(typeof rule == "string"){ rule = {urlContains:rule}; }
+		
+		if(typeof rule == "object"){
+			if(rule.urlIs){
+				var a = main.href.toLowerCase().replace(/^https?\:\/\//,""), b = rule.urlIs.toLowerCase().replace(/^https?\:\/\//,"");
+				return a == b || a.replace(/[\?#].*/,"").replace(/\/$/,"") == b.replace(/\/$/,"");
+			}
+			if(rule.urlContains) return main.href.toLowerCase().indexOf(rule.urlContains.toLowerCase()) !== -1;
+			if(rule.urlStartsWith) return main.href.toLowerCase().replace(/^https?\:\/\//,"").indexOf(rule.urlStartsWith.toLowerCase().replace(/^https?\:\/\//,"")) === 0;
+			if(rule.urlRegex) return main.href.match(rule.urlRegex);
+			if(rule.querySelector && document.querySelector) return !!document.querySelector(rule.querySelector);
+			if(main.pageTitle != ""){
+				if(rule.titleIs) return main.pageTitle.toLowerCase() == rule.titleIs.toLowerCase();
+				if(rule.titleContains) return main.pageTitle.toLowerCase().indexOf(rule.titleContains.toLowerCase()) !== -1;
+				if(rule.titleRegex) return main.pageTitle.match(rule.titleRegex);
+			}
+		}
+		return defval;
+	}
+	
+	function getTpName(){
+		
+		var cfg = main.config || {};
+		
+		// check if page is in block list
+		if(cfg.BlockPages.length > 0){
+			for(var i=0,L=cfg.BlockPages.length;i<L;i++){
+				if(!currentPageMatchesRule(cfg.BlockPages[i],false)) continue;
+				main.z_endCondition = "Blocked"; return false;
+			}
+		}
+		
+		// check if page is not in whitelist
+		if(cfg.Whitelist.length > 0){
+			var isWhitelisted = false;
+			for(var i=0,L=cfg.Whitelist.length;i<L;i++){ if(currentPageMatchesRule(cfg.Whitelist[i],true)){ isWhitelisted = true; break; }}
+			if(!isWhitelisted){ main.z_endCondition = "Not whitelisted"; return false; }
+		}
+		
+		// check if has fixed name
+		if(cfg.FixedNames.length > 0){
+			for(var i=0,L=cfg.FixedNames.length;i<L;i++){
+				if(!cfg.FixedNames[i].name) continue;
+				if(!currentPageMatchesRule(cfg.FixedNames[i],false)) continue;
+				main.z_endCondition = "Fixed name"; return cfg.FixedNames[i].name;
+			}
+		}
+		
+		main.z_endCondition = "Default name"; return main.defaultName;
+	}
+
+	function activateTP(newname){
+		
+		if(!newname){ main.z_endCondition = "New Name Not Found"; return; }
+		newname = main.config.namePrefix + newname;
+		
+		if(typeof config.finalNameFilter == "function"){
+			var filteredName = config.finalNameFilter((newname+""));
+			if(typeof filteredName == "string" && filteredName != newname){ main.z_endCondition += " /// Final name filtered"; newname = filteredName; }
+		}
+		main.finalName = newname;
+		
+		if(!adfLib.track){ main.z_endCondition = "ERROR! Adform library not loaded"; return; }
+		for(var i=0;i<main.firedTps.length;i++){ if(main.firedTps[i] == newname){ main.z_endCondition = "ERROR! Tracking point already fired"; return; }}
+		main.firedTps.push(newname);
+		
+		if(typeof config.customVars == "function"){
+			var order = {}, product = {}, hasOrder = false, hasProduct = false;
+			var additionalVars = config.customVars();
+			for(varName in additionalVars){
+				if(varName == "sales" || varName == "orderid"){ order[varName] = additionalVars[varName]; hasOrder = true; }
+				else{ product[varName] = additionalVars[varName]; hasProduct = true; }
+			}
+			if(hasOrder){ adfLib.createOrder(order); }
+			if(hasProduct){ adfLib.addProduct(product); }
+		}
+		
+		adfLib.Params.PageName = encodeURIComponent(newname);
+		adfLib.track(main.config.clientId);
+	}
+	
+	function addDelayedTp(dtp,delay){
+		
+		if(!dtp.delay || typeof dtp.delay != "number"){ dtp.skip = "wrongDelayEntered"; return; }
+		
+		if(dtp.blackList && dtp.blackList.length > 0){
+			for(var n=0,ln=dtp.blackList.length;n<ln;n++){
+				if(!currentPageMatchesRule(dtp.blackList[n],false)) continue;
+				dtp.skip = "blacklisted"; return;
+			}
+		}
+		
+		if(dtp.whiteList && dtp.whiteList.length > 0){
+			var isWhitelisted = false; for(var n=0,ln=dtp.whiteList.length;n<ln;n++){ if(currentPageMatchesRule(dtp.whiteList[n],true)){ isWhitelisted = true; break; }}
+			if(!isWhitelisted){ dtp.skip = "notWhitelisted"; return; }
+		}
+		
+		dtp.name = (dtp.prefix || "")+tpname+(dtp.suffix || "");
+		if(dtp.name == tpname){ dtp.skip = "sameAsTpName"; return; }
+		
+		setTimeout(function(){ dtp.fired = true; activateTP(dtp.name); },dtp.delay*1000);
+	}
+	
+	var tpname = getTpName();
+	if(tpname){
+		
+		activateTP(tpname);
+		if(config.delayedTps && config.delayedTps.length > 0){ for(var i=0,l=config.delayedTps.length;i<l;i++){ addDelayedTp(config.delayedTps[i]); }}
+	}
+	
+})()
+}catch(e){}
